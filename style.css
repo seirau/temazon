@@ -1,0 +1,35 @@
+
+div#cover
+{
+	z-index    : 110;
+	background : #fff;
+	left       : 0;
+	top        : 0;
+	width      : 100%;
+	height     : 100%;
+	display    : none;
+	position   : fixed;
+	opacity    : 0.4;
+}
+
+div#teaka_pics_area
+{
+	height      : 50px;
+	line-height : 50px;
+	text-align  : center;
+}
+
+div#pic_frame
+{
+	z-index: 120;
+	background: #fff;
+	left : 0;
+	top : 0;
+	width: 640px;
+	height: 480px;
+	margin-top: 150px;
+	margin-right: auto;
+	margin-left: auto;
+	display: none;
+	position: fixed;
+}
