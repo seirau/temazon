@@ -1,13 +1,7 @@
 $(function()
 {
-	$('#productTitle').css('background', '#ff0000');
-
-	var book_title = $('#productTitle').html();
-
-	if ("ちいさなたまねぎさん (こどものくに傑作絵本)".match(/ちいさなたまねぎさん/))
-	{
-		console.log("match");
-	}
+	var cur_book_title = $('#productTitle').html();
+	var teakas = [];
 
 	$.ajax(
 	{
@@ -20,27 +14,28 @@ $(function()
 		{
 			$.each(data, function(key, val)
 			{
-				if (book_title.match(new RegExp(val['book_title'])))
+				var book_title = val['book_title'];
+				book_title = book_title.replace(/　/g, "　?");
+
+				if (cur_book_title.match(new RegExp(book_title, "i")))
 				{
-					console.log('match');
+					teakas.push(val['index']);
 				}
 			});
 		}
 		,error: function(XMLHttpRequest, textStatus, errorThrown)
 		{
-
 		}
 	});
 
-	// foreach ($res as $data)
-	// {
-	// 	console.log($data['book_title']);
+	if (teakas.length <= 0)
+	{
+		return;
+	}
 
-	// 	if (strpos($data['book_title'], book_title) != FALSE)
-	// 	{
-	// 	}
-	// }
+	// $('#productTitle').css('background', '#ff0000');
 
+	// フローティングウィンドウカバー
 	var cover = $('<div></div>')
 	.attr('id', 'cover')
 	.appendTo('body');
@@ -55,14 +50,14 @@ $(function()
 	.attr('id', 'pic_frame')
 	.appendTo('body');
 
-	var pics_link = $('<a></a>')
-	.attr('id', 'teaka_link')
-	.html('手垢本の画像を見る');
+	$.each(teakas, function(key, val)
+	{
+	});
 
 	var pics_area = $('<div></div>')
 	.attr('id', 'teaka_pics_area')
 	.css('width', $('#leftCol').width())
-	.append(pics_link)
+	.append($('<a></a>').attr('id', 'teaka_link').html('手垢本の画像を見る'))
 	.appendTo('#leftCol');
 
 	$('#teaka_link')
@@ -70,5 +65,4 @@ $(function()
 	{
 		floating_window.show();
 	});
-
 });
