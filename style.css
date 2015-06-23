@@ -2,14 +2,14 @@
 div#cover
 {
 	z-index    : 110;
-	background : #fff;
+	background : #000;
 	left       : 0;
 	top        : 0;
 	width      : 100%;
 	height     : 100%;
 	display    : none;
 	position   : fixed;
-	opacity    : 0.4;
+	opacity    : 0.6;
 }
 
 div#teaka_pics_area
@@ -21,15 +21,14 @@ div#teaka_pics_area
 
 div#pic_frame
 {
-	z-index: 120;
-	background: #fff;
-	left : 0;
-	top : 0;
-	width: 640px;
-	height: 480px;
-	margin-top: 150px;
-	margin-right: auto;
-	margin-left: auto;
-	display: none;
-	position: fixed;
+	z-index      : 120;
+	background   : #fff;
+	left         : 0;
+	top          : 0;
+	margin-top   : 150px;
+	display      : none;
+	position     : fixed;
+	text-align: center;
+	overflow-x   : hidden;
+	overflow-y   : scroll;
 }

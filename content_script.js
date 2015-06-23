@@ -1,30 +1,38 @@
-$(function()
-{
-	var cur_book_title = $('#productTitle').html();
-	var teakas = [];
 
-	$.ajax(
-	{
+function loadJSON(url)
+{
+	var json;
+	$.ajax({
 		async: false
-		,url: "http://49.212.141.66/DYY/list.php"
+		,url: url
 		,cache: false
 		,scriptCharset: 'utf-8'
 		,dataType: 'json'
 		,success: function(data)
 		{
-			$.each(data, function(key, val)
-			{
-				var book_title = val['book_title'];
-				book_title = book_title.replace(/　/g, "　?");
-
-				if (cur_book_title.match(new RegExp(book_title, "i")))
-				{
-					teakas.push(val['index']);
-				}
-			});
+			json = data;
 		}
 		,error: function(XMLHttpRequest, textStatus, errorThrown)
 		{
+		}
+	});
+	return json;
+}
+
+$(function()
+{
+	var cur_book_title = $('#productTitle').html();
+	var teakas = [];
+
+	var books = loadJSON('http://49.212.141.66/DYY/list.php');
+	$.each(books, function(key, val)
+	{
+		var book_title = val['book_title'];
+		book_title = book_title.replace(/　/g, "　?");
+
+		if (cur_book_title.match(new RegExp(book_title, "i")))
+		{
+			teakas.push(val['index']);
 		}
 	});
 
@@ -46,12 +54,38 @@ $(function()
 		floating_window.hide();
 	});
 
+	var pic_frame_width = 760;
+	var pic_frame_height = 520;
 	var pic_frame = $('<div></div>')
 	.attr('id', 'pic_frame')
+	.css('width', pic_frame_width)
+	.css('height', pic_frame_height)
+	.css('margin-left', $(window).width()/2 - pic_frame_width/2)
+	.css('margin-right', $(window).height()/2 - pic_frame_height/2)
 	.appendTo('body');
 
 	$.each(teakas, function(key, val)
 	{
+		var book_data = loadJSON('http://49.212.141.66/DYY/list.php?book_id='+val);
+		var urls = book_data[0]['url'].split(",");
+		$.each(urls, function(key, val)
+		{
+			$.ajax({
+				async: true
+				,url: 'http://49.212.141.66/DYY/flickr_parser.php?url='+val
+				,cache: false
+				,scriptCharset: 'utf-8'
+				,dataType: 'text'
+				,success: function(data)
+				{
+					$('<img>')
+					.attr('src', data)
+					.css('width', '550px')
+					.css('margin-top', '8px')
+					.appendTo('#pic_frame');
+				}
+			});
+		});
 	});
 
 	var pics_area = $('<div></div>')
@@ -60,8 +94,7 @@ $(function()
 	.append($('<a></a>').attr('id', 'teaka_link').html('手垢本の画像を見る'))
 	.appendTo('#leftCol');
 
-	$('#teaka_link')
-	.click(function()
+	$('#teaka_link').click(function()
 	{
 		floating_window.show();
 	});
