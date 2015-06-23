@@ -58,10 +58,12 @@ $(function()
 	var pic_frame_height = 520;
 	var pic_frame = $('<div></div>')
 	.attr('id', 'pic_frame')
-	.css('width', pic_frame_width)
-	.css('height', pic_frame_height)
-	.css('margin-left', $(window).width()/2 - pic_frame_width/2)
-	.css('margin-right', $(window).height()/2 - pic_frame_height/2)
+	.css({
+		width: pic_frame_width
+		,height: pic_frame_height
+		,marginLeft: $(window).width()/2 - pic_frame_width/2
+		,marginTop: $(window).height()/2 - pic_frame_height/2
+	})
 	.appendTo('body');
 
 	$.each(teakas, function(key, val)
@@ -80,8 +82,10 @@ $(function()
 				{
 					$('<img>')
 					.attr('src', data)
-					.css('width', '550px')
-					.css('margin-top', '8px')
+					.css({
+						width: '550px'
+						,marginTop: '8px'
+					})
 					.appendTo('#pic_frame');
 				}
 			});
