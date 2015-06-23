@@ -19,6 +19,35 @@ function loadJSON(url)
 	return json;
 }
 
+function setupTeakaBookPics(teakas)
+{
+	$.each(teakas, function(key, val)
+	{
+		var book_data = loadJSON('http://49.212.141.66/DYY/list.php?book_id='+val);
+		var urls = book_data[0]['url'].split(",");
+		$.each(urls, function(key, val)
+		{
+			$.ajax({
+				async: true
+				,url: 'http://49.212.141.66/DYY/flickr_parser.php?url='+val
+				,cache: false
+				,scriptCharset: 'utf-8'
+				,dataType: 'text'
+				,success: function(data)
+				{
+					$('<img>')
+					.attr('src', data)
+					.css({
+						width: '550px'
+						,marginTop: '8px'
+					})
+					.appendTo('#pic_frame');
+				}
+			});
+		});
+	});
+}
+
 $(function()
 {
 	var cur_book_title = $('#productTitle').html();
@@ -48,7 +77,7 @@ $(function()
 	.attr('id', 'cover')
 	.appendTo('body');
 
-	var floating_window = new $temazon.FloatingWindow(cover);
+	var floating_window = new $temazon.FloatingWindow(cover, teakas);
 	cover.click(function()
 	{
 		floating_window.hide();
@@ -66,31 +95,7 @@ $(function()
 	})
 	.appendTo('body');
 
-	$.each(teakas, function(key, val)
-	{
-		var book_data = loadJSON('http://49.212.141.66/DYY/list.php?book_id='+val);
-		var urls = book_data[0]['url'].split(",");
-		$.each(urls, function(key, val)
-		{
-			$.ajax({
-				async: true
-				,url: 'http://49.212.141.66/DYY/flickr_parser.php?url='+val
-				,cache: false
-				,scriptCharset: 'utf-8'
-				,dataType: 'text'
-				,success: function(data)
-				{
-					$('<img>')
-					.attr('src', data)
-					.css({
-						width: '550px'
-						,marginTop: '8px'
-					})
-					.appendTo('#pic_frame');
-				}
-			});
-		});
-	});
+	setupTeakaBookPics(teakas);
 
 	var pics_area = $('<div></div>')
 	.attr('id', 'teaka_pics_area')
