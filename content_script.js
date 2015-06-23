@@ -1,6 +1,45 @@
 $(function()
 {
-	// $('#productTitle').css('background', '#ff0000');
+	$('#productTitle').css('background', '#ff0000');
+
+	var book_title = $('#productTitle').html();
+
+	if ("ちいさなたまねぎさん (こどものくに傑作絵本)".match(/ちいさなたまねぎさん/))
+	{
+		console.log("match");
+	}
+
+	$.ajax(
+	{
+		async: false
+		,url: "http://49.212.141.66/DYY/list.php"
+		,cache: false
+		,scriptCharset: 'utf-8'
+		,dataType: 'json'
+		,success: function(data)
+		{
+			$.each(data, function(key, val)
+			{
+				if (book_title.match(new RegExp(val['book_title'])))
+				{
+					console.log('match');
+				}
+			});
+		}
+		,error: function(XMLHttpRequest, textStatus, errorThrown)
+		{
+
+		}
+	});
+
+	// foreach ($res as $data)
+	// {
+	// 	console.log($data['book_title']);
+
+	// 	if (strpos($data['book_title'], book_title) != FALSE)
+	// 	{
+	// 	}
+	// }
 
 	var cover = $('<div></div>')
 	.attr('id', 'cover')
