@@ -16,7 +16,7 @@ var $temazon = {};
 
 			$('#pic_frame').css({
 				left: $(window).width()/2 - $('#pic_frame').width()/2
-				,top: $(window).scrollTop() + 60.0
+				,top: $(window).height()/2 - $('#pic_frame').height()/2
 			});
 
 			$('#pic_frame').fadeIn('fast');

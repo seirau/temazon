@@ -90,8 +90,6 @@ $(function()
 	.css({
 		width: pic_frame_width
 		,height: pic_frame_height
-		// ,left: $(window).width()/2 - pic_frame_width/2
-		// ,top: $(window).scrollTop() + 60.0
 	})
 	.appendTo('body');
 
