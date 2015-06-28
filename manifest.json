@@ -1,7 +1,7 @@
 {
 	"name": "Temazon"
 	,"version": "0.1"
-	,"description": "Temazon"
+	,"description": "Amazonをプラットフォームにして、手垢手帖を楽しめるChrome拡張機能です。"
 	,"manifest_version": 2
 
 	,"icons": {
