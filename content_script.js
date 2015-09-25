@@ -48,9 +48,11 @@ function setupTeakaBookPics(teakas)
 	});
 }
 
-$(function()
+/*
+ * 指定したタイトルから手垢インデックスを返す
+*/
+function getTeakaIndexes(title)
 {
-	var cur_book_title = $('#productTitle').html();
 	var teakas = [];
 
 	var books = loadJSON('http://49.212.141.66/DYY/list.php');
@@ -59,12 +61,65 @@ $(function()
 		var book_title = val['book_title'];
 		book_title = book_title.replace(/　/g, "　?");
 
-		if (cur_book_title.match(new RegExp(book_title, "i")))
+		if (title.match(new RegExp(book_title, "i")))
 		{
 			teakas.push(val['index']);
 		}
 	});
 
+	return teakas;
+}
+
+function setupHTML()
+{
+	// 手垢本写真
+	var pics_area = $('<div></div>')
+	.attr('id', 'teaka_pics_area')
+	.css('width', $('#leftCol').width())
+	.append($('<a></a>').attr('id', 'teaka_link').html('手垢本の画像を見る'))
+	.appendTo('#leftCol');
+
+	$('#teaka_link').click(function()
+	{
+		floating_window.show();
+	});
+
+	var sell_section = $('<div></div>')
+	.addClass('a-section a-spacing-medium a-padding-base');
+
+	// 手垢本登録ボタン
+	$('<span></span>')
+	.addClass('a-size-small sdpText')
+	.html('この商品の手垢本をお持ちですか？')
+	.appendTo(sell_section);
+
+	$('<span></span>')
+	.addClass('a-button a-button-small a-float-right')
+	.append(
+		$('<span></span>')
+		.addClass('a-button-inner')
+		.append(
+			$('<a></a>')
+			.addClass('a-button-text')
+			.attr('href', 'https://docs.google.com/forms/d/1IotgbGNCHX9DBL2_gAEvuL8T3tV10S5kK7dCIHSc8tA/viewform')
+			.attr('target', '_blank')
+			.attr('role', 'button')
+			.html('手垢本を登録する')
+			)
+	)
+	.appendTo(sell_section);
+
+	$('#sellYoursHere_feature_div')
+	.append(sell_section);
+}
+
+/* =======================================================
+ * エントリポイント
+=========================================================*/
+$(function()
+{
+	var cur_book_title = $('#productTitle').html();
+	var teakas = getTeakaIndexes(cur_book_title);
 	if (teakas.length <= 0)
 	{
 		return;
@@ -95,14 +150,5 @@ $(function()
 
 	setupTeakaBookPics(teakas);
 
-	var pics_area = $('<div></div>')
-	.attr('id', 'teaka_pics_area')
-	.css('width', $('#leftCol').width())
-	.append($('<a></a>').attr('id', 'teaka_link').html('手垢本の画像を見る'))
-	.appendTo('#leftCol');
-
-	$('#teaka_link').click(function()
-	{
-		floating_window.show();
-	});
+	setupHTML();
 });
