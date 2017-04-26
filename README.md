@@ -2,7 +2,7 @@
 
 ## これはなに
 
-Amazonをプラットフォームにして、[手垢手帖](http://www.iamas.ac.jp/~seirau12/yohakunakama_beta/techou/index.php)を楽しめるChrome拡張機能です。
+Amazonをプラットフォームにして、[手垢手帖](http://seeeer.main.jp/yohakunakama_beta/techou/index.php)を楽しめるChrome拡張機能です。
 
 ## 使い方
 
